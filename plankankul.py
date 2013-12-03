@@ -45,7 +45,14 @@ def check(game, hand, deck):
 
 
 def get_numbers(cards):
-    return [int(card[0]) for card in cards]
+    def to_int(number_part):
+        letters = {'a': 1, 't': 10, 'j': 11, 'q': 12, 'k': 13}
+        if number_part in letters:
+            return letters[number_part]
+        else:
+            return int(number_part)
+
+    return [to_int(card[0]) for card in cards]
 
 
 def get_suits(cards):
