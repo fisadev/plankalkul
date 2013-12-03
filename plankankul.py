@@ -1,4 +1,5 @@
 # coding: utf-8
+from collections import Counter
 from itertools import combinations
 from operator import itemgetter
 
@@ -49,6 +50,16 @@ def get_numbers(cards):
 
 def get_suits(cards):
     return map(itemgetter(1), cards)
+
+
+def check_two_pairs(cards):
+    numbers = get_numbers(cards)
+    counts = Counter(numbers)
+
+    repeated = [number for number, count in counts.items()
+                if count > 1]
+
+    return len(repeated) > 1
 
 
 def check_one_pair(cards):
