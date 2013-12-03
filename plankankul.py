@@ -61,6 +61,10 @@ def repeated_numbers(cards, min_repetitions=2):
             if count >= min_repetitions]
 
 
+def check_straight_flush(cards):
+    return check_flush(cards) and check_straight(cards)
+
+
 def check_four_of_a_kind(cards):
     return len(repeated_numbers(cards, 4)) > 0
 
