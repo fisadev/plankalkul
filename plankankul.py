@@ -45,7 +45,7 @@ def check(game, hand, deck):
 
 
 def get_numbers(cards):
-    return map(itemgetter(0), cards)
+    return [int(card[0]) for card in cards]
 
 
 def get_suits(cards):
@@ -56,6 +56,14 @@ def repeated_numbers(cards, min_repetitions=2):
     counts = Counter(get_numbers(cards))
     return [number for number, count in counts.items()
             if count >= min_repetitions]
+
+
+def check_straight(cards):
+    numbers = list(sorted(get_numbers(cards)))
+    first = numbers[0]
+    expected_numbers = range(first, first + len(numbers))
+
+    return numbers == expected_numbers
 
 
 def check_three_of_a_kind(cards):
