@@ -44,9 +44,9 @@ def check(game, hand, deck):
     return False
 
 
-def get_numbers(cards):
+def get_numbers(cards, ace_value=1):
     def to_int(number_part):
-        letters = {'a': 1, 't': 10, 'j': 11, 'q': 12, 'k': 13}
+        letters = {'a': ace_value, 't': 10, 'j': 11, 'q': 12, 'k': 13}
         if number_part in letters:
             return letters[number_part]
         else:
@@ -61,6 +61,7 @@ def get_suits(cards):
 
 def count_numbers(cards):
     return Counter(get_numbers(cards))
+
 
 def repeated_numbers(cards, min_repetitions=2):
     counts = count_numbers(cards)
@@ -85,8 +86,12 @@ def check_flush(cards):
     return len(set(get_suits(cards))) == 1
 
 
-def check_straight(cards):
-    numbers = list(sorted(get_numbers(cards)))
+def check_straight(cards, ace_value=1):
+    numbers = list(sorted(get_numbers(cards, ace_value)))
+
+    if 1 in numbers and check_straight(cards, ace_value=14):
+        return True
+
     first = numbers[0]
     expected_numbers = range(first, first + len(numbers))
 
