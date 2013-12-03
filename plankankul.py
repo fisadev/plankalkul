@@ -52,19 +52,22 @@ def get_suits(cards):
     return map(itemgetter(1), cards)
 
 
+def repeated_numbers(cards, min_repetitions=2):
+    counts = Counter(get_numbers(cards))
+    return [number for number, count in counts.items()
+            if count >= min_repetitions]
+
+
+def check_three_of_a_kind(cards):
+    return len(repeated_numbers(cards, 3)) > 0
+
+
 def check_two_pairs(cards):
-    numbers = get_numbers(cards)
-    counts = Counter(numbers)
-
-    repeated = [number for number, count in counts.items()
-                if count > 1]
-
-    return len(repeated) > 1
+    return len(repeated_numbers(cards)) > 1
 
 
 def check_one_pair(cards):
-    numbers = get_numbers(cards)
-    return len(set(numbers)) < len(cards)
+    return len(repeated_numbers(cards)) > 0
 
 
 def check_highest_card(cards):
