@@ -52,10 +52,18 @@ def get_suits(cards):
     return map(itemgetter(1), cards)
 
 
+def count_numbers(cards):
+    return Counter(get_numbers(cards))
+
 def repeated_numbers(cards, min_repetitions=2):
-    counts = Counter(get_numbers(cards))
+    counts = count_numbers(cards)
     return [number for number, count in counts.items()
             if count >= min_repetitions]
+
+
+def check_full_house(cards):
+    counts = count_numbers(cards)
+    return set(counts.values()) == set((2, 3))
 
 
 def check_flush(cards):
