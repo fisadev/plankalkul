@@ -58,6 +58,10 @@ def repeated_numbers(cards, min_repetitions=2):
             if count >= min_repetitions]
 
 
+def check_flush(cards):
+    return len(set(get_suits(cards))) == 1
+
+
 def check_straight(cards):
     numbers = list(sorted(get_numbers(cards)))
     first = numbers[0]
