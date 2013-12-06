@@ -1,17 +1,15 @@
 # coding: utf-8
+import sys
 from random import sample
-
-from plankalkul import guess as plankalkul_guess
-from wanks import guess as wanks_guess
-from face import guess as face_guess
-
-
-guessers = [plankalkul_guess, wanks_guess, face_guess]
 
 
 NUMBERS = '23456789tjqka'
 SUITS = 'cdhs'
 ALL_CARDS = [n + s for n in NUMBERS for s in SUITS]
+
+
+guessers = [__import__(module).guess
+            for module in sys.argv[1:]]
 
 
 while True:
@@ -20,12 +18,10 @@ while True:
 
     results = [guesser(hand, deck) for guesser in guessers]
 
-    print hand, '-', deck,
+    print hand, '-', deck, '|',
     if len(set(results)) != 1:
-        print 'Difference!',
-        for guesser, result in zip(guessers, results):
-            print guesser.__module__, result,
+        results_text = ['%s:%s' % (guesser.__module__, result)
+                        for guesser, result in zip(guessers, results)]
+        print 'DIFF', ' '.join(results_text)
     else:
-        print 'Ok',
-
-    print ''
+        print 'OK'
